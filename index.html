@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VIENNA— Luxury in Every Stitch</title>
+  <style>
+    :root {
+      --bg:#000;      /* black */
+      --bg-2:#0b0b0b; /* deep black */
+      --card:#111;    /* card surface */
+      --muted:#888;   /* muted text */
+      --text:#fff;    /* white */
+      --gold:#d4af37; /* gold */
+      --border:#2a2a2a;
+      --shadow: 0 10px 30px rgba(0,0,0,.6);
+    }
+    html {scroll-behavior:smooth;}
+    body {margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--text);}    
+
+    /* ===== Preloader ===== */
+    #preloader {position:fixed; inset:0; background:#000; display:grid; place-items:center; z-index:4000;}
+    #preloader .logo-wrap{display:flex; align-items:center; gap:.8rem;}
+    #preloader img{width:72px; height:72px; object-fit:contain; filter: drop-shadow(0 0 12px rgba(212,175,55,.35));}
+    #preloader .brand{font-weight:800; letter-spacing:.18em; color:var(--gold); font-size:1.2rem;}
+    #preloader.fade-out{animation:fadeout .6s ease forwards .2s;}
+    @keyframes fadeout{to{opacity:0; visibility:hidden}}
+
+    /* ===== Header / Nav ===== */
+    header {position:sticky; top:0; z-index:3000; backdrop-filter:saturate(140%) blur(8px); background:rgba(0,0,0,.6); border-bottom:1px solid rgba(255,255,255,.05);}    
+    .nav {max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:.8rem 1rem;}
+    .nav .left {display:flex; align-items:center; gap:.6rem;}
+    .nav img.logo {width: 80px; height: 40px; object-fit:contain;}
+    .brand {font-weight:800; letter-spacing:.18em;}
+    .nav a {color:var(--text); text-decoration:none; font-weight:600; margin:0 .6rem; padding:.4rem .6rem; border-radius:8px; transition:all .2s ease;}
+    .nav a:hover {color:#000; background:var(--gold);} 
+    .nav .links{display:flex; align-items:center;}
+
+        /* ===== ig link ===== */
+          .insta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(45deg, #100f0b, #fa7e1e, #d62976, #962fbf, #09090d);
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 18px;
+    border-radius: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .insta-btn img {
+    width: 20px;
+    height: 20px;
+  }
+  .insta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  }
+    /* ===== Sections ===== */
+    section {padding:4rem 1.2rem;}
+    .container {max-width:1100px; margin:0 auto;}
+    h1,h2,h3{margin:.2rem 0 1rem}
+    h2{font-size:2rem}
+    p.lead{color:#ccc; max-width:720px}
+
+    /* ===== Hero ===== */
+    #home {min-height:86vh; display:grid; place-items:center; position:relative; overflow:hidden;}
+    #home::before {content:""; position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1400&auto=format&fit=crop') center/cover no-repeat fixed; opacity:.32;}
+    #home .inner {position:relative; text-align:center; padding:3rem 1rem;}
+    #home .hero-logo {width:300px; height:300px; object-fit:contain; margin:0 auto 1rem; filter: drop-shadow(0 0 30px rgba(212,175,55,.25));}
+  
+    #home p {color:#eaeaea; max-width:720px; margin:0 auto 1.5rem;}
+    .cta {display:inline-block; background:var(--gold); color:#000; font-weight:800; padding: .9rem 1.4rem; border-radius:12px; text-decoration:none; box-shadow: 0 8px 30px rgba(212,175,55,.35); position:relative;}
+    .cta::after{content:""; position:absolute; inset:-8px; border-radius:16px; box-shadow:0 0 24px rgba(212,175,55,.35); opacity:0; animation:pulse 2.4s ease-out infinite;}
+    @keyframes pulse{0%{opacity:.35} 70%{opacity:0} 100%{opacity:0}}
+
+    /* ===== Store Grid ===== */
+    #store .grid {display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:1.2rem;}
+    .card {background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; box-shadow:var(--shadow); transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease; cursor:pointer;}
+    .card:hover{transform:translateY(-4px); box-shadow: 0 18px 40px rgba(212,175,55,.12); border-color: rgba(212,175,55,.4);}    
+    .card img {width:100%; height:260px; object-fit:cover; display:block;}
+    .card .info {padding:1rem;}
+    .price {color:var(--gold); font-weight:800;}
+
+    /* ===== Product Detail (Overlay) ===== */
+    #productDetail {display:none; position:fixed; inset:0; background:rgba(0,0,0,.92); z-index:3500; align-items:center; justify-content:center; padding:1.2rem;}
+    .detail-box {background:var(--card); color:var(--text); border:1px solid var(--border); border-radius:16px; padding:1.2rem; width:min(100%, 980px); display:grid; grid-template-columns: 1.1fr 1fr; gap:1.2rem; box-shadow:var(--shadow);}
+    .detail-images {display:flex; flex-direction:column; gap:.8rem;}
+    .main-img {width:100%; aspect-ratio: 4/5; object-fit:cover; border-radius:12px; border:1px solid var(--border);} 
+    .thumbs {display:flex; gap:.5rem; flex-wrap:wrap;}
+    .thumbs img{width:64px; height:64px; object-fit:cover; border-radius:8px; border:2px solid transparent; cursor:pointer;}
+    .thumbs img.active, .thumbs img:hover{border-color:var(--gold);}    
+    .detail-info h3{margin:.2rem 0 .6rem}
+    .detail-info .desc{color:#ddd}
+    .buy-btn {background:var(--gold); color:#000; border:none; padding:.9rem 1.3rem; border-radius:10px; font-weight:800; cursor:pointer; box-shadow:0 10px 30px rgba(212,175,55,.35);} 
+    .close-detail {position:absolute; top:16px; right:16px; background:var(--gold); color:#000; border:none; padding:.5rem .9rem; border-radius:10px; font-weight:800; cursor:pointer;}
+
+    /* ===== Order Modal ===== */
+    #orderModal {display:none; position:fixed; inset:0; background:rgba(0,0,0,.8); z-index:3600; align-items:center; justify-content:center; padding:1rem;}
+    #orderModal .modal-box {background:var(--card); border:1px solid var(--border); color:var(--text); width:min(100%,520px); border-radius:16px; box-shadow:var(--shadow); padding:1.2rem;}
+    #orderModal h3{margin:.2rem 0 1rem}
+    label{display:block; font-weight:600; margin:.8rem 0 .3rem}
+    input, select, textarea{width:100%; background:#000; color:#fff; border:1px solid var(--border); border-radius:10px; padding:.7rem .8rem; outline:none}
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:.6rem}
+    .actions{display:flex; gap:.6rem; margin-top:1rem}
+    .btn{background:var(--gold); color:#000; border:none; padding:.8rem 1.2rem; border-radius:10px; font-weight:800; cursor:pointer}
+    .btn.secondary{background:#1a1a1a; color:#fff; border:1px solid var(--border)}
+
+    /* ===== Reviews ===== */
+    .reviews-list {display:grid; gap:.8rem; margin:1rem 0 1.2rem}
+    .review {display:grid; grid-template-columns:48px 1fr; gap:.8rem; align-items:start; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:.8rem}
+    .review img{width:48px; height:48px; border-radius:50%; object-fit:cover;}
+    #reviewForm input, #reviewForm textarea{background:#000; border:1px solid var(--border); color:#fff; border-radius:10px; padding:.7rem}
+    #reviewForm button{margin-top:.4rem}
+
+    /* ===== FAQ ===== */
+    .faq {display:grid; gap:.6rem}
+    .faq-item {border:1px solid var(--border); border-radius:12px; overflow:hidden; background:var(--card)}
+    .faq-q {display:flex; justify-content:space-between; align-items:center; cursor:pointer; padding:.9rem 1rem; font-weight:700}
+    .faq-a {max-height:0; overflow:hidden; transition:max-height .35s ease; border-top:1px solid var(--border); padding:0 1rem}
+    .faq-item.open .faq-a{max-height:260px; padding: .9rem 1rem}
+
+    /* ===== Reveal on View ===== */
+    .reveal{opacity:0; transform: translateY(12px); transition: all .6s ease}
+    .reveal.in{opacity:1; transform:none}
+
+    /* ===== Footer ===== */
+    footer{border-top:1px solid var(--border); color:#aaa; padding:2rem 1rem; text-align:center}
+
+    /* ===== Responsive ===== */
+    @media (max-width: 860px){
+      .detail-box{grid-template-columns:1fr}
+      .row{grid-template-columns:1fr}
+    }
+      .contact-section {
+    background: #111;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 400px;
+     margin: 20px auto;  /* <-- this centers it */
+  }
+  .contact-section h2 {
+    margin-bottom: 15px;
+    color: gold;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .contact-item img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  .contact-item a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .contact-item a:hover {
+    color: gold;
+  }
+  </style>
+  <!-- Styling for the ad box -->
+<style>
+  .sidebar-ad {
+    position: fixed;   /* makes the ad "stick" on screen */
+    right: 10px;       /* distance from the right side */
+    top: 100px;        /* distance from the top */
+    z-index: 999;      /* keeps it on top of other elements */
+  }
+</style>
+</head>
+<body>
+  <!-- ===== Preloader ===== -->
+  <div id="preloader" aria-hidden="true">
+    <div class="logo-wrap">
+      <img src="logo.png" alt="Vienna logo"/>
+      <div class="brand">VIENNA</div>
+    </div>
+  </div>
+
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="nav">
+      <div class="left">
+        <img class="logo" src="logo.png" alt="Vienna"/>
+        <div class="brand">VIENNA</div>
+      </div>
+      <nav class="links">
+        <!-- Instagram Button -->
+<a href="#" id="instagram-link" class="insta-btn">
+  <img src="instagram.png" alt="Instagram" />
+  Follow us on Instagram
+</a>
+
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section id="home">
+    <div class="inner container reveal">
+      <img class="hero-logo" src="logo.png" alt="Vienna"/>
+      
+      <p class="lead">Luxury in Every Stitch — premium street-luxe apparel crafted with precision and timeless design.</p>
+      <a href="#store" data-scroll class="cta">Shop Now</a>
+    </div>
+  </section>
+
+  <!-- ===== Store ===== -->
+  <section id="store">
+    <div class="container">
+      <h2 class="reveal">Our Collection</h2>
+      <p class="lead reveal">Handpicked essentials with bold silhouettes and gold accents.</p>
+      <div id="productGrid" class="grid reveal"></div>
+    </div>
+  </section>
+
+  <!-- ===== Product Detail Overlay ===== -->
+  <div id="productDetail" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+    <button class="close-detail" onclick="closeProduct()">✕</button>
+    <div class="detail-box">
+      <div class="detail-images">
+        <img id="mainImage" class="main-img" src="" alt="Product image"/>
+        <div id="thumbs" class="thumbs"></div>
+      </div>
+      <div class="detail-info">
+        <h3 id="detailTitle"></h3>
+        <div class="price" id="detailPrice"></div>
+        <p class="desc" id="detailDesc"></p>
+        <div class="actions">
+          <button class="buy-btn" onclick="openOrderModal()">Buy Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Order Modal ===== -->
+  <div id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
+    <div class="modal-box">
+      <h3 id="orderTitle">Place Your Order</h3>
+      <form id="orderForm">
+        <label for="size">Size</label>
+        <select id="size" required>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+        </select>
+
+        <div class="row">
+          <div>
+            <label for="qty">Quantity</label>
+            <input id="qty" type="number" min="1" value="1" required />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="you@example.com" required />
+          </div>
+        </div>
+
+        <label for="phone">Phone</label>
+        <div class="row">
+          <select id="dial">
+            <option value="+212" selected>🇲🇦 +212</option>
+            <option value="+33">🇫🇷 +33</option>
+            <option value="+34">🇪🇸 +34</option>
+            <option value="+1">🇺🇸 +1</option>
+            <option value="+44">🇬🇧 +44</option>
+            <option value="+44">ca +1</option>
+          </select>
+          <input id="phone" type="tel" placeholder="6......." required />
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="city">City</label>
+            <input id="city" type="text" placeholder="Casablanca" />
+          </div>
+          <div>
+            <label for="hood">Neighborhood</label>
+            <input id="hood" type="text" placeholder="Maarif" />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn">Submit</button>
+          <button type="button" class="btn secondary" onclick="closeOrderModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== Reviews ===== -->
+  <section id="reviews">
+    <div class="container">
+      <h2 class="reveal">Customer Reviews</h2>
+      <div id="reviewsList" class="reviews-list reveal">
+        <div class="review">
+          <img src="profil.jpg" alt="Profile"/>
+          <div>
+            <strong>Sarah</strong>
+            <div>chkran besaf 3jbatni hoddie.</div>
+          </div>
+        </div>
+        <div class="review">
+          <img src="profil.jpg" alt="Profile"/>
+          <div>
+            <strong>Omar</strong>
+            <div>pyasa mliha tbarkelah  merci bzf </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="reveal">Add Your Review</h3>
+      <form id="reviewForm" class="reveal">
+        <div class="row">
+          <input id="reviewer" type="text" placeholder="Your Name" required />
+          <input id="reviewAvatar" type="url" placeholder="Avatar Image URL (optional)" />
+        </div>
+        <textarea id="reviewText" rows="3" placeholder="Your review..." required></textarea>
+        <button type="submit" class="btn">Submit Review</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== Support ===== -->
+  <section id="support">
+    <div class="container">
+      <h2 class="reveal">Support</h2>
+      <div class="faq reveal" id="faq">
+        <div class="faq-item">
+          <div class="faq-q">How long is delivery? <span>＋</span></div>
+          <div class="faq-a">Usually 3–5 business days within Morocco; 5–10 days international.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What is your return policy? <span>＋</span></div>
+          <div class="faq-a">30-day return guarantee on unworn items with original tags.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do you ship internationally? <span>＋</span></div>
+          <div class="faq-a">"We are sorry, we currently do not ship international.<div>
+        </div>
+      </div>
+
+  </section>
+<!-- Contact Section -->
+<div class="contact-section">
+  <h2>Contact Us</h2>
+  <div class="contact-item">
+    <img src="https://cdn-icons-png.flaticon.com/512/724/724664.png" alt="Phone">
+    <a href="tel:+1234567890">+1 234 567 890</a> <!-- Replace with your phone -->
+        <img src="https://cdn-icons-png.flaticon.com/512/724/724664.png" alt="Phone">
+    <a href="tel:+1234567890">+212 18467073</a> <!-- Replace with your phone -->
+  </div>
+  <div class="contact-item">
+    <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email">
+    <a href="mailto:you@example.com">you@example.com</a> <!-- Replace -->
+  </div>
+  <div class="contact-item">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+    <a href="https://www.instagram.com/yourusername" target="_blank">@yourusername</a>
+  </div>
+  <div class="contact-item">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+    <a href="https://www.instagram.com/partnerusername" target="_blank">@partnerusername</a>
+  </div>
+</div>
+  <footer>
+    <div class="container">© <span id="year"></span> VIENNA — All rights reserved.</div>
+  
+  </footer>
+
+  <script>
+    /* ===== Sample Products (productes) ===== */
+    const products = [
+      {
+        title: 'Vienna Hoodie',
+        desc: 'Premium cotton hoodie with heat prest text ',
+        price: '250dh',
+        images: [
+          'hoddie2.jpg',
+          'hoddie.jpg',
+          ''
+        ]
+      },
+      {
+        title: 'chemise vienna ',
+        desc: 'Premium cotton chemise with gold Vienna embroidery.',
+        price: '250dh',
+        images: [
+          'chemiss.jpg',
+          'chemiss1.jpg',
+          'chemiis3.jpg',
+          'chemiss4.jpg'
+        ]
+      },
+      {
+        title: 't-shirt noir',
+        desc: 't-shirt noir avec impretion termique billie ilish', 
+        price: '250dh',
+        images: [
+          'item31.jpg',
+          'item32.jpg',
+          'item33.jpg',
+          'item34.jpg'
+        ]
+      },
+      {
+        title: 'Classic Tee',
+        desc: 'Heavyweight t-shirt, perfect drape and hand-feel.',
+        price: '439dh',
+        images: [
+          'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=800&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?q=80&w=800&auto=format&fit=crop'
+        ]
+      },
+      {
+        title: 'Minimalist Crewneck',
+        desc: 'French terry crew with ribbed collar and cuffs.',
+        price: '$39.99',
+        images: [
+          'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=800&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop'
+        ]
+      },
+      {
+        title: 'Tailored Pants',
+        desc: 'Tapered fit with clean lines and comfort stretch.',
+        price: '$59.99',
+        images: [
+          'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=800&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1515808182231-129c2d37d710?q=80&w=800&auto=format&fit=crop'
+        ]
+      },
+      {
+        title: 'Statement Coat',
+        desc: 'Dramatic silhouette with premium wool blend.',
+        price: '$129.99',
+        images: [
+          'https://images.unsplash.com/photo-1520975869016-6f61d14b6b9b?q=80&w=800&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=800&auto=format&fit=crop'
+        ]
+      },
+      {
+        title: 'Vienna Cap',
+        desc: 'Clean 6-panel cap with embroidered monogram.',
+        price: '$24.99',
+        images: [
+          'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=800&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1552074280-9d7073c7e3a6?q=80&w=800&auto=format&fit=crop'
+        ]
+      },
+      {
+        title: 'Silk Scarf',
+        desc: 'Soft-touch silk scarf with gold trim.',
+        price: '$34.99',
+        images: [
+          'https://images.unsplash.com/photo-1520972796149-91c7d07d8e3f?q=80&w=800&auto=format&fit=crop',
+          'https://images.unsplash.com/photo-1491554150239-a9062e24de5a?q=80&w=800&auto=format&fit=crop'
+        ]
+      }
+    ]
+
+    /* ===== Build product grid ===== */
+    const grid = document.getElementById('productGrid');
+    products.forEach((p, i) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${p.images[0]}" alt="${p.title}">
+        <div class="info">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:.6rem">
+            <div>
+              <div style="font-weight:800">${p.title}</div>
+              <div style="color:#bbb; font-size:.95rem">${p.desc}</div>
+            </div>
+            <div class="price">${p.price}</div>
+          </div>
+        </div>`;
+      card.addEventListener('click', () => openProduct(i));
+      grid.appendChild(card);
+    });
+
+    /* ===== ig link ===== */
+const username = "xmcure_0"; // <-- change this
+
+  const appLink = `instagram://user?xmcure_0=${username}`;
+  const webLink = `https://www.instagram.com/xmcure_0/${username}/`;
+
+  document.getElementById("instagram-link").addEventListener("click", function (e) {
+    e.preventDefault();
+
+    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      window.location.href = appLink;
+      setTimeout(() => {
+        window.location.href = webLink;
+      }, 1000);
+    } else {
+      window.open(webLink, "_blank");
+    }
+  });
+    /* ===== Product detail logic ===== */
+    let currentProductIndex = 0;
+    function openProduct(index){
+      currentProductIndex = index;
+      const p = products[index];
+      document.getElementById('detailTitle').textContent = p.title;
+      document.getElementById('detailDesc').textContent = p.desc;
+      document.getElementById('detailPrice').textContent = p.price;
+      const main = document.getElementById('mainImage');
+      main.src = p.images[0];
+      const thumbs = document.getElementById('thumbs');
+      thumbs.innerHTML = '';
+      p.images.forEach((src, i) => {
+        const im = document.createElement('img');
+        im.src = src; if(i===0) im.classList.add('active');
+        im.onclick = () => {main.src = src; [...thumbs.children].forEach(t=>t.classList.remove('active')); im.classList.add('active');}
+        thumbs.appendChild(im);
+      });
+      document.getElementById('productDetail').style.display = 'flex';
+    }
+    function closeProduct(){document.getElementById('productDetail').style.display='none'}
+
+    /* ===== Order modal ===== */
+    function openOrderModal(){document.getElementById('orderModal').style.display='flex'}
+    function closeOrderModal(){document.getElementById('orderModal').style.display='none'}
+    document.getElementById('orderForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const p = products[currentProductIndex];
+      const payload = {
+        product: p.title,
+        size: document.getElementById('size').value,
+        qty: document.getElementById('qty').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('dial').value + ' ' + document.getElementById('phone').value,
+        city: document.getElementById('city').value,
+        hood: document.getElementById('hood').value,
+      };
+      alert(`Order submitted!\n\nProduct: ${payload.product}\nSize: ${payload.size}\nQty: ${payload.qty}\nEmail: ${payload.email}\nPhone: ${payload.phone}\nCity: ${payload.city}\nNeighborhood: ${payload.hood}`);
+      closeOrderModal();
+      closeProduct();
+      e.target.reset();
+    });
+
+    /* ===== Reviews add ===== */
+    document.getElementById('reviewForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const name = document.getElementById('reviewer').value.trim();
+      const text = document.getElementById('reviewText').value.trim();
+      const avatar = document.getElementById('reviewAvatar').value.trim() || 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=200&auto=format&fit=crop';
+      if(!name || !text) return;
+      const div = document.createElement('div');
+      div.className = 'review';
+      div.innerHTML = `<img src="${avatar}" alt="${name}"><div><strong>${name}</strong><div>${text}</div></div>`;
+      document.getElementById('reviewsList').appendChild(div);
+      e.target.reset();
+    });
+
+    /* ===== FAQ accordion ===== */
+    document.querySelectorAll('.faq-item .faq-q').forEach(q=>{
+      q.addEventListener('click', ()=>{
+        q.parentElement.classList.toggle('open');
+      });
+    });
+
+    /* ===== Smooth scroll with header offset ===== */
+    const headerH = () => document.querySelector('header').offsetHeight;
+    document.querySelectorAll('[data-scroll]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href');
+        if(id.startsWith('#')){ e.preventDefault();
+          const el = document.querySelector(id);
+          const y = el.getBoundingClientRect().top + window.pageYOffset - (headerH() + 8);
+          window.scrollTo({top:y, behavior:'smooth'});
+        }
+      })
+    })
+
+    /* ===== Reveal on view ===== */
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, {threshold:.16});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    /* ===== Preloader hide ===== */
+    window.addEventListener('load', ()=>{
+      document.getElementById('preloader').classList.add('fade-out');
+      document.getElementById('year').textContent = new Date().getFullYear();
+    });
+
+    /* Close overlays with ESC */
+    window.addEventListener('keydown', (e)=>{
+      if(e.key==='Escape'){
+        closeProduct();
+        closeOrderModal();
+      }
+    });
+  </script>
+  <!-- Load Google Ads script -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<!-- Ad container -->
+<div class="sidebar-ad">
+  <!-- This is where the ad will show -->
+  <ins class="adsbygoogle"
+       style="display:block; width:160px; height:600px;"
+       data-ad-client="ca-pub-3940256099942544"  <!-- TEST ID (replace later) -->
+       data-ad-slot="123456"                     <!-- TEST SLOT (replace later) -->
+       data-ad-format="auto"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+</body>
+</html>
