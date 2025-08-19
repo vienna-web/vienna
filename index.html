@@ -11,6 +11,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-P2S3KFWZ');</script>
 <!-- End Google Tag Manager -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  emailjs.init("Zx38gIPF2-FFvWj1H"); 
+</script>
+</script>
   <style>
     :root {
       --bg:#000;      /* black */
@@ -239,61 +244,61 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 
-  <!-- ===== Order Modal ===== -->
-  <div id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
-    <div class="modal-box">
-      <h3 id="orderTitle">Place Your Order</h3>
-      <form id="orderForm">
-        <label for="size">Size</label>
-        <select id="size" required>
-          <option value="S">S</option>
-          <option value="M">M</option>
-          <option value="L">L</option>
-          <option value="XL">XL</option>
+<!-- ===== Order Modal ===== -->
+<div id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
+  <div class="modal-box">
+    <h3 id="orderTitle">Place Your Order</h3>
+    <form id="orderForm">
+      <label for="size">Size</label>
+      <select id="size" name="size" required>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+      </select>
+
+      <div class="row">
+        <div>
+          <label for="qty">Quantity</label>
+          <input id="qty" name="qty" type="number" min="1" value="1" required />
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required />
+        </div>
+      </div>
+
+      <label for="phone">Phone</label>
+      <div class="row">
+        <select id="dial" name="dial">
+          <option value="+212" selected>🇲🇦 +212</option>
+          <option value="+33">🇫🇷 +33</option>
+          <option value="+34">🇪🇸 +34</option>
+          <option value="+1">🇺🇸 +1</option>
+          <option value="+44">🇬🇧 +44</option>
+          <option value="+1">🇨🇦 +1</option>
         </select>
+        <input id="phone" name="phone" type="tel" placeholder="6......." required />
+      </div>
 
-        <div class="row">
-          <div>
-            <label for="qty">Quantity</label>
-            <input id="qty" type="number" min="1" value="1" required />
-          </div>
-          <div>
-            <label for="email">Email</label>
-            <input id="email" type="email" placeholder="you@example.com" required />
-          </div>
+      <div class="row">
+        <div>
+          <label for="city">City</label>
+          <input id="city" name="city" type="text" placeholder="Casablanca" />
         </div>
+        <div>
+          <label for="hood">Neighborhood</label>
+          <input id="hood" name="hood" type="text" placeholder="Maarif" />
+        </div>
+      </div>
 
-        <label for="phone">Phone</label>
-        <div class="row">
-          <select id="dial">
-            <option value="+212" selected>🇲🇦 +212</option>
-            <option value="+33">🇫🇷 +33</option>
-            <option value="+34">🇪🇸 +34</option>
-            <option value="+1">🇺🇸 +1</option>
-            <option value="+44">🇬🇧 +44</option>
-            <option value="+44">ca +1</option>
-          </select>
-          <input id="phone" type="tel" placeholder="6......." required />
-        </div>
-
-        <div class="row">
-          <div>
-            <label for="city">City</label>
-            <input id="city" type="text" placeholder="Casablanca" />
-          </div>
-          <div>
-            <label for="hood">Neighborhood</label>
-            <input id="hood" type="text" placeholder="Maarif" />
-          </div>
-        </div>
-
-        <div class="actions">
-          <button type="submit" class="btn">Submit</button>
-          <button type="button" class="btn secondary" onclick="closeOrderModal()">Cancel</button>
-        </div>
-      </form>
-    </div>
+      <div class="actions">
+        <button type="submit" class="btn">Submit</button>
+        <button type="button" class="btn secondary" onclick="closeOrderModal()">Cancel</button>
+      </div>
+    </form>
   </div>
+</div>
 
   <!-- ===== Reviews ===== -->
   <section id="reviews">
@@ -515,26 +520,36 @@ const username = "viennastore_co"; // <-- change this
     }
     function closeProduct(){document.getElementById('productDetail').style.display='none'}
 
-    /* ===== Order modal ===== */
-    function openOrderModal(){document.getElementById('orderModal').style.display='flex'}
-    function closeOrderModal(){document.getElementById('orderModal').style.display='none'}
-    document.getElementById('orderForm').addEventListener('submit', (e)=>{
-      e.preventDefault();
-      const p = products[currentProductIndex];
-      const payload = {
-        product: p.title,
-        size: document.getElementById('size').value,
-        qty: document.getElementById('qty').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('dial').value + ' ' + document.getElementById('phone').value,
-        city: document.getElementById('city').value,
-        hood: document.getElementById('hood').value,
-      };
-      alert(`Order submitted!\n\nProduct: ${payload.product}\nSize: ${payload.size}\nQty: ${payload.qty}\nEmail: ${payload.email}\nPhone: ${payload.phone}\nCity: ${payload.city}\nNeighborhood: ${payload.hood}`);
+   /* ===== Order modal ===== */
+function openOrderModal(){document.getElementById('orderModal').style.display='flex'}
+function closeOrderModal(){document.getElementById('orderModal').style.display='none'}
+
+document.getElementById('orderForm').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const p = products[currentProductIndex];
+  const payload = {
+    product: p.title,
+    size: document.getElementById('size').value,
+    qty: document.getElementById('qty').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('dial').value + ' ' + document.getElementById('phone').value,
+    city: document.getElementById('city').value,
+    hood: document.getElementById('hood').value,
+  };
+
+  // send order via EmailJS
+  emailjs.send("service_5191ouc", "template_q8uvhad", payload)
+    .then(()=>{
+      alert("✅ Your order was sent successfully! We’ll contact you soon.");
       closeOrderModal();
       closeProduct();
       e.target.reset();
+    })
+    .catch((err)=>{
+      alert("❌ Failed to send order. Please try again.");
+      console.error("EmailJS Error:", err);
     });
+});
 
     /* ===== Reviews add ===== */
     document.getElementById('reviewForm').addEventListener('submit', (e)=>{
