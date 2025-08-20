@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-78X4BGES7Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-78X4BGES7Q');
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>VIENNA—digital store</title>
-  <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-P2S3KFWZ');</script>
-<!-- End Google Tag Manager -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-  emailjs.init("Zx38gIPF2-FFvWj1H"); 
-</script>
-</script>
   <style>
     :root {
       --bg:#000;      /* black */
@@ -177,11 +174,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   }
   </style>
 </head>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  (function(){
+    emailjs.init("Zx38gIPF2-FFvWj1H"); // replace with your real EmailJS Public Key
+  })();
+</script>
 <body>
-  <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P2S3KFWZ"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
   <!-- ===== Preloader ===== -->
   <div id="preloader" aria-hidden="true">
     <div class="logo-wrap">
@@ -244,61 +243,61 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 
-<!-- ===== Order Modal ===== -->
-<div id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
-  <div class="modal-box">
-    <h3 id="orderTitle">Place Your Order</h3>
-    <form id="orderForm">
-      <label for="size">Size</label>
-      <select id="size" name="size" required>
-        <option value="S">S</option>
-        <option value="M">M</option>
-        <option value="L">L</option>
-        <option value="XL">XL</option>
-      </select>
-
-      <div class="row">
-        <div>
-          <label for="qty">Quantity</label>
-          <input id="qty" name="qty" type="number" min="1" value="1" required />
-        </div>
-        <div>
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" placeholder="you@example.com" required />
-        </div>
-      </div>
-
-      <label for="phone">Phone</label>
-      <div class="row">
-        <select id="dial" name="dial">
-          <option value="+212" selected>🇲🇦 +212</option>
-          <option value="+33">🇫🇷 +33</option>
-          <option value="+34">🇪🇸 +34</option>
-          <option value="+1">🇺🇸 +1</option>
-          <option value="+44">🇬🇧 +44</option>
-          <option value="+1">🇨🇦 +1</option>
+  <!-- ===== Order Modal ===== -->
+  <div id="orderModal" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
+    <div class="modal-box">
+      <h3 id="orderTitle">Place Your Order</h3>
+      <form id="orderForm">
+        <label for="size">Size</label>
+        <select id="size" required>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
         </select>
-        <input id="phone" name="phone" type="tel" placeholder="6......." required />
-      </div>
 
-      <div class="row">
-        <div>
-          <label for="city">City</label>
-          <input id="city" name="city" type="text" placeholder="Casablanca" />
+        <div class="row">
+          <div>
+            <label for="qty">Quantity</label>
+            <input id="qty" type="number" min="1" value="1" required />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="you@example.com" required />
+          </div>
         </div>
-        <div>
-          <label for="hood">Neighborhood</label>
-          <input id="hood" name="hood" type="text" placeholder="Maarif" />
-        </div>
-      </div>
 
-      <div class="actions">
-        <button type="submit" class="btn">Submit</button>
-        <button type="button" class="btn secondary" onclick="closeOrderModal()">Cancel</button>
-      </div>
-    </form>
+        <label for="phone">Phone</label>
+        <div class="row">
+          <select id="dial">
+            <option value="+212" selected>🇲🇦 +212</option>
+            <option value="+33">🇫🇷 +33</option>
+            <option value="+34">🇪🇸 +34</option>
+            <option value="+1">🇺🇸 +1</option>
+            <option value="+44">🇬🇧 +44</option>
+            <option value="+44">ca +1</option>
+          </select>
+          <input id="phone" type="tel" placeholder="6......." required />
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="city">City</label>
+            <input id="city" type="text" placeholder="Casablanca" />
+          </div>
+          <div>
+            <label for="hood">Neighborhood</label>
+            <input id="hood" type="text" placeholder="Maarif" />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn">Submit</button>
+          <button type="button" class="btn secondary" onclick="closeOrderModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 
   <!-- ===== Reviews ===== -->
   <section id="reviews">
@@ -368,7 +367,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="container">© <span id="year"></span> VIENNA — All rights reserved.</div>
   
   </footer>
-
+ 
   <script>
     /* ===== Sample Products (productes) ===== */
     const products = [
@@ -407,7 +406,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       {
         title: 'Rihanna "wassup rocky?" t-shirt',
         desc: 'Heavyweight t-shirt, perfect drape and hand-feel.',
-        price: '139dh',
+        price: '439dh',
         images: [
           'item41.jpg',
           'item42.jpg'
@@ -416,7 +415,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       {
         title: 'Rihanna "wassup rocky?" t-shirt',
         desc: 'Crew neck Ribbed collar Drop shoulders Boxy fit 100% combed cotton High-temperature steam pre-shrunk Reactive-dyed 3.5 Fabric ',
-        price: '139dh',
+        price: '$39.99',
         images: [
           'item51.jpg',
           'item52.jpg'
@@ -520,37 +519,40 @@ const username = "viennastore_co"; // <-- change this
     }
     function closeProduct(){document.getElementById('productDetail').style.display='none'}
 
-   /* ===== Order modal ===== */
-function openOrderModal(){document.getElementById('orderModal').style.display='flex'}
-function closeOrderModal(){document.getElementById('orderModal').style.display='none'}
+  /* ===== Order modal ===== */
+  function openOrderModal(){
+    document.getElementById('orderModal').style.display='flex';
+  }
+  function closeOrderModal(){
+    document.getElementById('orderModal').style.display='none';
+  }
 
-document.getElementById('orderForm').addEventListener('submit', (e)=>{
-  e.preventDefault();
-  const p = products[currentProductIndex];
-  const payload = {
-    product: p.title,
-    size: document.getElementById('size').value,
-    qty: document.getElementById('qty').value,
-    email: document.getElementById('email').value,
-    phone: document.getElementById('dial').value + ' ' + document.getElementById('phone').value,
-    city: document.getElementById('city').value,
-    hood: document.getElementById('hood').value,
-  };
+  document.getElementById('orderForm').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const p = products[currentProductIndex];
+    const payload = {
+      product: p.title,
+      size: document.getElementById('size').value,
+      qty: document.getElementById('qty').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('dial').value + ' ' + document.getElementById('phone').value,
+      city: document.getElementById('city').value,
+      hood: document.getElementById('hood').value,
+    };
 
-  // send order via EmailJS
-  emailjs.send("service_5191ouc", "template_q8uvhad", payload)
-    .then(()=>{
-      alert("✅ Your order was sent successfully! We’ll contact you soon.");
-      closeOrderModal();
-      closeProduct();
-      e.target.reset();
-    })
-    .catch((err)=>{
-      alert("❌ Failed to send order. Please try again.");
-      console.error("EmailJS Error:", err);
-    });
-});
-
+    // ✉️ Send with EmailJS
+    emailjs.send("service_5191ouc", "template_bby24mw", payload)
+      .then(() => {
+        alert("✅ Order sent successfully!");
+        closeOrderModal();
+        closeProduct();
+        e.target.reset();
+      })
+      .catch((error) => {
+        alert("❌ Failed to send order. Check console for details.");
+        console.error("EmailJS Error:", error);
+      });
+  });
     /* ===== Reviews add ===== */
     document.getElementById('reviewForm').addEventListener('submit', (e)=>{
       e.preventDefault();
